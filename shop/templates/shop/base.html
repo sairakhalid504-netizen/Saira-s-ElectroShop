@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ElectroShop{% endblock %}</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{% static 'shop/style.css' %}">
+</head>
+<body>
+
+    <!-- Header / Navbar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="{% url 'product_list' %}" class="logo">
+                <i class="fa-solid fa-bolt logo-icon"></i>
+                <span>ElectroShop</span>
+            </a>
+
+            <!-- Search Form -->
+            <form action="{% url 'product_list' %}" method="GET" class="search-form">
+                <input type="text" name="q" placeholder="Search premium items..." value="{{ query|default:'' }}" class="search-input">
+                <button type="submit" class="search-btn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </form>
+
+            <!-- Cart Trigger -->
+            <button class="cart-trigger-btn" id="open-cart-btn">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span class="cart-badge" id="cart-badge-count">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2026 ElectroShop. Built with passion & Django.</p>
+        </div>
+    </footer>
+
+    <!-- Slide-out Cart Drawer -->
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <div class="cart-drawer" id="cart-drawer">
+        <div class="cart-header">
+            <h3>Your Trolley</h3>
+            <button class="close-cart-btn" id="close-cart-btn">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        
+        <!-- Cart Items List -->
+        <div class="cart-items" id="cart-items-container">
+            <!-- Dynamically populated by cart.js -->
+        </div>
+
+        <!-- Cart Footer -->
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total-price">$0.00</span>
+            </div>
+            <button class="checkout-btn" onclick="alert('Checkout completed! Thank you for shopping with us.')">
+                Proceed to Checkout
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{% static 'shop/cart.js' %}"></script>
+</body>
+</html>

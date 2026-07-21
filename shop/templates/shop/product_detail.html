@@ -1,0 +1,46 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}ElectroShop - {{ product.name }}{% endblock %}
+
+{% block content %}
+    <div class="back-navigation">
+        <a href="{% url 'product_list' %}" class="back-link">
+            <i class="fa-solid fa-arrow-left"></i> Back to Store
+        </a>
+    </div>
+
+    <div class="product-detail-container">
+        <!-- Product Visual -->
+        <div class="product-detail-visual">
+            <div class="detail-placeholder-icon">
+                <i class="fa-solid fa-laptop-code"></i>
+            </div>
+        </div>
+
+        <!-- Product Specs/Info -->
+        <div class="product-detail-info">
+            <span class="detail-category">PREMIUM CATEGORY</span>
+            <h1>{{ product.name }}</h1>
+            <div class="detail-price-box">
+                <span class="detail-price">${{ product.price }}</span>
+                <span class="in-stock-badge"><i class="fa-solid fa-circle-check"></i> In Stock</span>
+            </div>
+            
+            <hr class="divider">
+
+            <div class="detail-description">
+                <h3>About this item</h3>
+                <p>{{ product.description }}</p>
+            </div>
+
+            <div class="detail-actions">
+                <button class="add-to-cart-btn-large add-to-cart-btn"
+                        data-id="{{ product.id }}" 
+                        data-name="{{ product.name }}" 
+                        data-price="{{ product.price }}">
+                    Add to Trolley <i class="fa-solid fa-cart-plus"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

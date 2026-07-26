@@ -4,9 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Saira's ElectroShop{% endblock %}</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Discover premium laptops, smartphones, and audio gear at Saira's ElectroShop. High performance, sleek designs, and the best tech deals.">
+    <title>{% block title %}Saira's ElectroShop - Premium Tech & Gadgets{% endblock %}</title>
+    <!-- Google Fonts: Rubik (headings) + Nunito Sans (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500;600;700&family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Stylesheet -->
@@ -17,21 +20,21 @@
     <!-- Header / Navbar -->
     <header class="navbar">
         <div class="nav-container">
-            <a href="{% url 'product_list' %}" class="logo">
+            <a href="{% url 'product_list' %}" class="logo" id="site-logo">
                 <i class="fa-solid fa-bolt logo-icon"></i>
                 <span>Saira's ElectroShop</span>
             </a>
 
             <!-- Search Form -->
-            <form action="{% url 'product_list' %}" method="GET" class="search-form">
-                <input type="text" name="q" placeholder="Search premium items..." value="{{ query|default:'' }}" class="search-input">
-                <button type="submit" class="search-btn">
+            <form action="{% url 'product_list' %}" method="GET" class="search-form" id="search-form-global">
+                <input type="text" name="q" id="search-input-field" placeholder="Search premium items..." value="{{ query|default:'' }}" class="search-input" aria-label="Search items">
+                <button type="submit" class="search-btn" id="search-submit-button" aria-label="Submit search">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
             </form>
 
             <!-- Cart Trigger -->
-            <button class="cart-trigger-btn" id="open-cart-btn">
+            <button class="cart-trigger-btn" id="open-cart-btn" aria-label="Open Shopping Cart">
                 <i class="fa-solid fa-bag-shopping"></i>
                 <span class="cart-badge" id="cart-badge-count">0</span>
             </button>
@@ -39,23 +42,23 @@
     </header>
 
     <!-- Main Content -->
-    <main class="container">
+    <main class="container" id="main-content-area">
         {% block content %}{% endblock %}
     </main>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer" id="site-footer">
         <div class="footer-container">
-            <p>&copy; 2026 Saira's ElectroShop. Built with passion & Django.</p>
+            <p>&copy; 2026 Saira's ElectroShop. Built with passion, Django, and modern design.</p>
         </div>
     </footer>
 
     <!-- Slide-out Cart Drawer -->
     <div class="cart-overlay" id="cart-overlay"></div>
-    <div class="cart-drawer" id="cart-drawer">
+    <div class="cart-drawer" id="cart-drawer" role="dialog" aria-labelledby="cart-title" aria-hidden="true">
         <div class="cart-header">
-            <h3>Your Trolley</h3>
-            <button class="close-cart-btn" id="close-cart-btn">
+            <h3 id="cart-title">Your Trolley</h3>
+            <button class="close-cart-btn" id="close-cart-btn" aria-label="Close Shopping Cart">
                 <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
@@ -71,7 +74,7 @@
                 <span>Total:</span>
                 <span id="cart-total-price">$0.00</span>
             </div>
-            <button class="checkout-btn" onclick="alert('Checkout completed! Thank you for shopping with us.')">
+            <button class="checkout-btn" id="checkout-button" onclick="alert('Checkout completed! Thank you for shopping with us.')">
                 Proceed to Checkout
             </button>
         </div>

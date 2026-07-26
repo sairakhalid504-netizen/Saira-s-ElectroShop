@@ -4,26 +4,44 @@
 
 {% block content %}
     <div class="back-navigation">
-        <a href="{% url 'product_list' %}" class="back-link">
-            <i class="fa-solid fa-arrow-left"></i> Back to Store
+        <a href="{% url 'product_list' %}" class="back-link" id="back-to-store-link">
+            <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Back to Store
         </a>
     </div>
 
-    <div class="product-detail-container">
+    <div class="product-detail-container" id="product-detail-card">
         <!-- Product Visual -->
         <div class="product-detail-visual">
             <div class="detail-placeholder-icon">
-                <i class="fa-solid fa-laptop-code"></i>
+                {% if "laptop" in product.name|lower %}
+                    <i class="fa-solid fa-laptop" aria-hidden="true"></i>
+                {% elif "phone" in product.name|lower or "mobile" in product.name|lower %}
+                    <i class="fa-solid fa-mobile-screen-button" aria-hidden="true"></i>
+                {% elif "headphone" in product.name|lower or "earphone" in product.name|lower %}
+                    <i class="fa-solid fa-headphones" aria-hidden="true"></i>
+                {% else %}
+                    <i class="fa-solid fa-microchip" aria-hidden="true"></i>
+                {% endif %}
             </div>
         </div>
 
         <!-- Product Specs/Info -->
         <div class="product-detail-info">
-            <span class="detail-category">PREMIUM CATEGORY</span>
-            <h1>{{ product.name }}</h1>
+            <span class="detail-category">
+                {% if "laptop" in product.name|lower %}
+                    Computing
+                {% elif "phone" in product.name|lower or "mobile" in product.name|lower %}
+                    Mobile
+                {% elif "headphone" in product.name|lower or "earphone" in product.name|lower %}
+                    Audio
+                {% else %}
+                    Gadget
+                {% endif %}
+            </span>
+            <h1 id="product-detail-name">{{ product.name }}</h1>
             <div class="detail-price-box">
-                <span class="detail-price">${{ product.price }}</span>
-                <span class="in-stock-badge"><i class="fa-solid fa-circle-check"></i> In Stock</span>
+                <span class="detail-price" id="product-detail-price">${{ product.price }}</span>
+                <span class="in-stock-badge"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> In Stock</span>
             </div>
             
             <hr class="divider">
@@ -35,10 +53,12 @@
 
             <div class="detail-actions">
                 <button class="add-to-cart-btn-large add-to-cart-btn"
+                        id="add-to-cart-detail-{{ product.id }}"
                         data-id="{{ product.id }}" 
                         data-name="{{ product.name }}" 
-                        data-price="{{ product.price }}">
-                    Add to Trolley <i class="fa-solid fa-cart-plus"></i>
+                        data-price="{{ product.price }}"
+                        aria-label="Add {{ product.name }} to trolley">
+                    Add to Trolley <i class="fa-solid fa-cart-plus" aria-hidden="true"></i>
                 </button>
             </div>
         </div>

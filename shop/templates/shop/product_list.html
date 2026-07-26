@@ -1,21 +1,24 @@
 {% extends 'shop/base.html' %}
 
-{% block title %}Saira's ElectroShop - Premium Tech Store{% endblock %}
+{% block title %}Saira's ElectroShop - Premium Tech & Gadgets{% endblock %}
 
 {% block content %}
-    <!-- Hero Banner -->
-    <section class="hero-section">
+    <!-- Hero Banner (Vibrant & Block Style) -->
+    <section class="hero-section" id="hero-banner-store">
         <div class="hero-content">
             <h1>Upgrade Your Digital Life</h1>
             <p>Explore the finest gadgets with high performance, elegant designs, and unparalleled speed.</p>
+            <a href="#store-products-title" class="btn-primary" id="hero-cta-button">
+                Shop Now <i class="fa-solid fa-arrow-down"></i>
+            </a>
         </div>
     </section>
 
     <!-- Search Results / Title Section -->
-    <div class="section-header">
+    <div class="section-header" id="store-products-title">
         {% if query %}
-            <h2>Showing results for "{{ query }}"</h2>
-            <a href="{% url 'product_list' %}" class="clear-search-btn">Show All Products</a>
+            <h2>Results for "{{ query }}"</h2>
+            <a href="{% url 'product_list' %}" class="clear-search-btn" id="clear-search-link">Show All Products</a>
         {% else %}
             <h2>Featured Gadgets</h2>
         {% endif %}
@@ -23,25 +26,48 @@
 
     <!-- Product Grid -->
     {% if products %}
-        <div class="product-grid">
+        <div class="product-grid" id="product-grid-container">
             {% for product in products %}
-                <div class="product-card">
+                <div class="product-card" id="product-card-{{ product.id }}">
                     <div class="product-card-image">
-                        <!-- Placeholder visual styling instead of heavy image load -->
                         <div class="placeholder-icon">
-                            <i class="fa-solid fa-laptop-code"></i>
+                            {% if "laptop" in product.name|lower %}
+                                <i class="fa-solid fa-laptop" aria-hidden="true"></i>
+                            {% elif "phone" in product.name|lower or "mobile" in product.name|lower %}
+                                <i class="fa-solid fa-mobile-screen-button" aria-hidden="true"></i>
+                            {% elif "headphone" in product.name|lower or "earphone" in product.name|lower %}
+                                <i class="fa-solid fa-headphones" aria-hidden="true"></i>
+                            {% else %}
+                                <i class="fa-solid fa-microchip" aria-hidden="true"></i>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="product-card-info">
-                        <span class="product-category">GADGET</span>
-                        <h3><a href="{% url 'product_detail' product.pk %}" class="product-title-link">{{ product.name }}</a></h3>
+                        <span class="product-category">
+                            {% if "laptop" in product.name|lower %}
+                                Computing
+                            {% elif "phone" in product.name|lower or "mobile" in product.name|lower %}
+                                Mobile
+                            {% elif "headphone" in product.name|lower or "earphone" in product.name|lower %}
+                                Audio
+                            {% else %}
+                                Gadget
+                            {% endif %}
+                        </span>
+                        <h3>
+                            <a href="{% url 'product_detail' product.pk %}" class="product-title-link" id="product-title-{{ product.id }}">
+                                {{ product.name }}
+                            </a>
+                        </h3>
                         <p class="product-desc">{{ product.description|truncatewords:15 }}</p>
                         <div class="product-footer">
-                            <span class="product-price">${{ product.price }}</span>
+                            <span class="product-price" id="product-price-{{ product.id }}">${{ product.price }}</span>
                             <button class="add-to-cart-btn" 
+                                    id="add-to-cart-{{ product.id }}"
                                     data-id="{{ product.id }}" 
                                     data-name="{{ product.name }}" 
-                                    data-price="{{ product.price }}">
+                                    data-price="{{ product.price }}"
+                                    aria-label="Add {{ product.name }} to trolley">
                                 Add <i class="fa-solid fa-cart-plus"></i>
                             </button>
                         </div>
@@ -50,11 +76,11 @@
             {% endfor %}
         </div>
     {% else %}
-        <div class="no-products">
-            <i class="fa-solid fa-triangle-exclamation warning-icon"></i>
+        <div class="no-products" id="no-products-view">
+            <i class="fa-solid fa-triangle-exclamation warning-icon" aria-hidden="true"></i>
             <h3>No products found!</h3>
             <p>Try searching with another keyword or return to home page.</p>
-            <a href="{% url 'product_list' %}" class="btn-primary">Back to Store</a>
+            <a href="{% url 'product_list' %}" class="btn-primary" id="return-store-button">Back to Store</a>
         </div>
     {% endif %}
 {% endblock %}
